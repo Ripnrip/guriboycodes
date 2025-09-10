@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuriboyCodes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --shimmer-color: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0c0a09; /* Zinc-950 */
+            color: #d4d4d4; /* Zinc-400 */
+        }
+
+        .hero-bg {
+            background-image: linear-gradient(to top, rgba(12,10,9,1) 0%, rgba(12,10,9,0.5) 50%, rgba(12,10,9,1) 100%),
+                              url('https://placehold.co/1920x1080/0c0a09/18181b?text=');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bento-item {
+            position: relative;
+            background-color: #18181b; /* Zinc-900 */
+            border: 1px solid #27272a; /* Zinc-800 */
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .bento-item:hover {
+            border-color: #3f3f46; /* Zinc-700 */
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        .bento-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--shimmer-color), transparent);
+            transition: left 0.8s ease-in-out;
+        }
+
+        .bento-item:hover:before {
+            left: 100%;
+        }
+        
+        .marquee {
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="relative min-h-screen">
+        <!-- Hero Section -->
+        <header class="hero-bg relative w-full h-screen flex flex-col justify-center items-center text-center">
+            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="relative z-10 px-4">
+                <h1 class="text-4xl sm:text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 mb-4 animate-fade-in-up">
+                    GuriboyCodes
+                </h1>
+                <p class="text-lg sm:text-2xl md:text-3xl font-light text-gray-300 max-w-2xl mx-auto mb-8 animate-fade-in-up delay-100">
+                    Building Legendary Apps at the Edge of iOS & AI.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-up delay-200">
+                    <a href="#projects" class="px-6 py-3 bg-white text-black rounded-full font-bold shadow-lg hover:shadow-xl transition-all duration-300">
+                        Explore Projects
+                    </a>
+                    <a href="#about" class="px-6 py-3 text-gray-200 border border-gray-600 rounded-full font-bold hover:bg-white/10 transition-all duration-300">
+                        About Gurinder
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Marquee Ticker -->
+        <div class="w-full py-4 bg-gray-950 border-y border-gray-800 overflow-hidden relative">
+            <div class="marquee">
+                <div class="marquee-content text-sm font-light text-gray-400">
+                    <span class="px-8">92M Venmo users</span>
+                    <span class="px-8">500+ interviews conducted</span>
+                    <span class="px-8">28+ hackathons attended</span>
+                    <span class="px-8">Multiple patents filed</span>
+                    <span class="px-8">CTE Advisory Board Member</span>
+                    <span class="px-8">PayPal ERG Leader</span>
+                    <span class="px-8">Featured on BBC documentary</span>
+                    <span class="px-8">Closed $60M contract</span>
+                    <span class="px-8">92M Venmo users</span>
+                    <span class="px-8">500+ interviews conducted</span>
+                    <span class="px-8">28+ hackathons attended</span>
+                    <span class="px-8">Multiple patents filed</span>
+                    <span class="px-8">CTE Advisory Board Member</span>
+                    <span class="px-8">PayPal ERG Leader</span>
+                    <span class="px-8">Featured on BBC documentary</span>
+                    <span class="px-8">Closed $60M contract</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- About/Career Section -->
+        <section id="about" class="container mx-auto py-16 px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">About & Career</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- PayPal -->
+                <div class="bento-item col-span-1 md:col-span-2">
+                    <h3 class="text-2xl font-bold text-white mb-2">PayPal (2019–Present)</h3>
+                    <p class="text-sm text-gray-400 mb-4">Staff iOS & AI/ML Engineer</p>
+                    <p class="text-gray-400 mb-4">
+                        At PayPal, I've spent the past five years shaping Venmo’s iOS platform, used by **92 million active users**. My contributions have included:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2">
+                        <li>**High-Level Design (HLD):** Drove architectural planning across teams, leading cross-org design sessions for features like **Pay With Venmo** for merchants like JetBlue.</li>
+                        <li>**Patents & Scale:** I am a **patent-holder** in mobile payments and helped secure a **$60M enterprise contract** by delivering scalable in-store checkout APIs.</li>
+                        <li>**AI Initiatives:** Spearheaded AI-driven efforts, exploring intelligent personalization and applying **RAG and CoreML/MLX models** to iOS workflows.</li>
+                        <li>**Leadership & Mentorship:** Conducted **400+ interviews**, unblocked teams by diagnosing cross-platform issues, and ran internal knowledge-sharing sessions.</li>
+                    </ul>
+                </div>
+
+                <!-- Google & Morgan Stanley -->
+                <div class="bento-item">
+                    <h3 class="text-2xl font-bold text-white mb-2">Google & Morgan Stanley</h3>
+                    <p class="text-sm text-gray-400 mb-4">Consultant & iOS Engineer</p>
+                    <div class="space-y-6">
+                        <div class="relative">
+                            <h4 class="font-semibold text-white">Google Stadia (2018–2019)</h4>
+                            <p class="text-sm text-gray-400">
+                                Worked as a consultant during the launch, contributing **Flutter/Dart and native iOS plugins** and conducting ~100 interviews.
+                            </p>
+                        </div>
+                        <div class="relative">
+                            <h4 class="font-semibold text-white">Morgan Stanley (2016–2018)</h4>
+                            <p class="text-sm text-gray-400">
+                                Modernized the Wealth Management app from 98% Objective-C to a balanced **Swift/Obj-C hybrid**, refactoring a Cordova stack with **~75 plugins**.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Technical Experience -->
+                <div class="bento-item">
+                    <h3 class="text-2xl font-bold text-white mb-2">Other Experience</h3>
+                    <ul class="list-disc list-inside text-gray-400 space-y-2">
+                        <li>**Parabit Systems (2017–2018):** Built **Bluetooth Low Energy tooling** for technicians.</li>
+                        <li>**Citi (2016):** Delivered Citi Gold features for iOS app using **Swift + custom MVC**.</li>
+                        <li>**Aerify Media (2012–2014):** Built **ad-serving SDKs** for iOS and desktop.</li>
+                    </ul>
+                </div>
+                
+                <!-- Skills & Tech -->
+                <div class="bento-item col-span-1 md:col-span-2">
+                    <h3 class="text-2xl font-bold text-white mb-2">Skills & Tech</h3>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-300">iOS/Swift</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-300">SwiftUI</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-300">UIKit</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-500/20 text-purple-300">AI/ML</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-500/20 text-purple-300">RAG</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-500/20 text-purple-300">CoreML</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-500/20 text-green-300">Flutter/Dart</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-500/20 text-green-300">Next.js</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-red-500/20 text-red-300">High-Level Design</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500/20 text-yellow-300">AWS Serverless</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500/20 text-yellow-300">Tailwind CSS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="container mx-auto py-16 px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">Projects & Entrepreneurship</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1: Ethereal Dimension -->
+                <div class="bento-item">
+                    <h3 class="text-xl font-semibold text-white mb-2">Ethereal Dimension</h3>
+                    <p class="text-gray-400 mb-4">
+                        A storytelling site covering projects like **Texas Barricades** and **Hylios**.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-300">Next.js</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-500/20 text-green-300">Tailwind</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-500/20 text-purple-300">MDX</span>
+                    </div>
+                </div>
+                <!-- Project 2: VectorVerse Evolve -->
+                <div class="bento-item">
+                    <h3 class="text-xl font-semibold text-white mb-2">VectorVerse Evolve</h3>
+                    <p class="text-gray-400 mb-4">
+                        An agentic **SEO platform** using **LLMs and vector databases** for modern search optimization.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-500/20 text-purple-300">AI</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-pink-500/20 text-pink-300">RAG</span>
+                    </div>
+                </div>
+                <!-- Project 3: Rosicrucian -->
+                <div class="bento-item">
+                    <h3 class="text-xl font-semibold text-white mb-2">Rosicrucian Knowledge Explorer</h3>
+                    <p class="text-gray-400 mb-4">
+                        An **AI-powered RAG search engine** for exploring esoteric texts.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-500/20 text-purple-300">AI/ML</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500/20 text-yellow-300">ChromaDB</span>
+                    </div>
+                </div>
+                <!-- Project 4: ERG Langar App -->
+                <div class="bento-item">
+                    <h3 class="text-xl font-semibold text-white mb-2">ERG Langar App</h3>
+                    <p class="text-gray-400 mb-4">
+                        An interactive **Sikh temple education game** demoed at PayPal's ERG.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-pink-500/20 text-pink-300">Flutter</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-red-500/20 text-red-300">Dart</span>
+                    </div>
+                </div>
+                 <!-- Project 5: Hackathon Wins -->
+                <div class="bento-item">
+                    <h3 class="text-xl font-semibold text-white mb-2">Hackathon Wins</h3>
+                    <p class="text-gray-400 mb-4">
+                        **1st place wins** at MLH Bloomberg London and Devcamp NYC, and featured in a **BBC documentary**.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-indigo-500/20 text-indigo-300">Winner</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-500/20 text-yellow-300">Innovation</span>
+                    </div>
+                </div>
+                 <!-- Project 6: Community & Leadership -->
+                <div class="bento-item">
+                    <h3 class="text-xl font-semibold text-white mb-2">Community & Leadership</h3>
+                    <p class="text-gray-400 mb-4">
+                        Served on the **CTE Advisory Board** and as a leader in the PayPal **Sikh Faith Group**.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-cyan-500/20 text-cyan-300">Mentorship</span>
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-teal-500/20 text-teal-300">Community</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container mx-auto py-16 px-4 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4">Let's Connect</h2>
+            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+                Whether you're a recruiter, a fellow engineer, or just want to chat about tech, feel free to reach out.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="https://linkedin.com/in/gurinder-singh-a30a1a48/" target="_blank" class="px-6 py-3 bg-purple-600 text-white rounded-full font-bold shadow-lg hover:bg-purple-700 transition-all duration-300">
+                    LinkedIn
+                </a>
+                <a href="https://github.com/guriboy" target="_blank" class="px-6 py-3 text-gray-200 border border-gray-600 rounded-full font-bold hover:bg-white/10 transition-all duration-300">
+                    GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-6 text-center text-gray-500 text-sm border-t border-gray-800">
+            &copy; 2024 Gurinder Singh. All Rights Reserved.
+        </footer>
+    </div>
+</body>
+</html>
