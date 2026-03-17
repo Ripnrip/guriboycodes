@@ -9,7 +9,83 @@ const Skills = () => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
 
-  // Comprehensive skills data organized by category with connections
+  // Skill icon mapping - maps skill names to icon files in /skill-icons/
+  const skillIcons = {
+    'Swift': 'swift.svg',
+    'SwiftUI': 'swiftui.svg',
+    'UIKit': 'uikit.svg',
+    'Objective-C': 'objective-c.svg',
+    'SwiftData': 'swiftui.svg',
+    'ARKit': 'arkit.svg',
+    'RoomPlan': 'arkit.svg',
+    'BLE': 'ble.svg',
+    'MapKit': 'mapkit.svg',
+    'CoreML': 'coreml.svg',
+    'MLX': 'mlx.svg',
+    'RxSwift': 'rxswift.svg',
+    'Combine': 'swift.svg',
+    'Flutter': 'flutter.svg',
+    'Dart': 'dart.svg',
+    'React Native': 'react-native.svg',
+    'ActivityKit': 'activitykit.svg',
+    'WidgetKit': 'widgetkit.svg',
+    'Xcode': 'xcode.svg',
+    'Fastlane': 'fastlane.svg',
+    'Python': 'python.svg',
+    'PyTorch': 'pytorch.svg',
+    'OpenAI': 'openai.svg',
+    'Anthropic': 'anthropic.svg',
+    'Gemini': 'gemini-icon.png',
+    'Llama': 'pytorch.svg',
+    'LangChain': 'langchain.svg',
+    'LlamaIndex': 'llamaindex.svg',
+    'CrewAI': 'crewai.svg',
+    'N8N': 'n8n.svg',
+    'MCP Servers': 'modelcontextprotocol.svg',
+    'SDXL': 'stabilityai.svg',
+    'LoRA': 'huggingface.svg',
+    'Stable Diffusion': 'stable-diffusion.svg',
+    'YOLO': 'yolo.svg',
+    'OpenCV': 'opencv.svg',
+    'Whisper': 'openai.svg',
+    'ElevenLabs': 'elevenlabs.svg',
+    'AWS Lambda': 'aws.svg',
+    'AWS EC2': 'aws.svg',
+    'AWS S3': 'aws.svg',
+    'GCP': 'gcp.svg',
+    'Vertex AI': 'vertex-ai.svg',
+    'Azure': 'azure.svg',
+    'Docker': 'docker.svg',
+    'Kubernetes': 'kubernetes.svg',
+    'Supabase': 'supabase.svg',
+    'Firebase': 'firebase.svg',
+    'GitHub Actions': 'github-actions.svg',
+    'Jenkins': 'jenkins.svg',
+    'Vercel': 'vercel.svg',
+    'PostgreSQL': 'postgresql.svg',
+    'MongoDB': 'mongodb.svg',
+    'DynamoDB': 'dynamodb.svg',
+    'Pinecone': 'pinecone.svg',
+    'ChromaDB': 'chromadb.svg',
+    'Qdrant': 'qdrant.svg',
+    'Redis': 'redis.svg',
+    'GraphQL': 'graphql.svg',
+    'Amplitude': 'amplitude.svg',
+    'DataDog': 'datadog.svg',
+    'Jira': 'jira.svg',
+    'React': 'react.svg',
+    'Next.js': 'nextjs.svg',
+    'TypeScript': 'typescript.svg',
+    'JavaScript': 'javascript.svg',
+    'Tailwind CSS': 'swift.svg',
+    'Vite': 'vercel.svg',
+    'Node.js': 'nodejs.svg',
+    'Figma': 'figma.svg',
+    'Cursor': 'cursor.svg',
+    'TDD': 'tdd.svg',
+  };
+
+  // Comprehensive skills data organized by category
   const skillCategories = [
     {
       id: 'mobile',
@@ -97,7 +173,6 @@ const Skills = () => {
     }
   ];
 
-  // Get all unique skills
   const allSkills = [...new Set(skillCategories.flatMap(cat => cat.skills))];
 
   // Canvas constellation animation
@@ -118,7 +193,6 @@ const Skills = () => {
     resize();
     window.addEventListener('resize', resize);
 
-    // Create particles for constellation
     const particles = [];
     const numParticles = 80;
     const rect = canvas.getBoundingClientRect();
@@ -141,7 +215,6 @@ const Skills = () => {
       const rect = canvas.getBoundingClientRect();
       ctx.clearRect(0, 0, rect.width, rect.height);
 
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -166,7 +239,6 @@ const Skills = () => {
         }
       }
 
-      // Draw and update particles
       particles.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
@@ -206,6 +278,43 @@ const Skills = () => {
     : [];
 
   const totalSkills = allSkills.length;
+
+  // Render a skill badge with optional icon
+  const SkillBadge = ({ skill, category, size = 'sm', isExpanded = false }) => {
+    const iconFile = skillIcons[skill];
+    const isHovered = hoveredSkill === skill;
+    const catColor = category?.color || '#A855F7';
+    
+    return (
+      <div
+        className="group relative"
+        onMouseEnter={() => setHoveredSkill(skill)}
+        onMouseLeave={() => setHoveredSkill(null)}
+      >
+        <Badge
+          className={`cursor-default transition-all duration-300 hover:scale-110 hover:shadow-lg flex items-center gap-1.5 ${
+            isExpanded ? 'text-sm px-4 py-2.5' : 'text-xs px-2.5 py-1.5'
+          }`}
+          style={{
+            backgroundColor: isHovered ? catColor : catColor + '15',
+            color: isHovered ? 'white' : catColor,
+            borderColor: catColor + '30',
+          }}
+        >
+          {iconFile && (
+            <img 
+              src={`/skill-icons/${iconFile}`} 
+              alt={skill}
+              className={`${isExpanded ? 'w-5 h-5' : 'w-4 h-4'} object-contain`}
+              style={{ filter: isHovered ? 'brightness(10)' : 'none' }}
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
+          )}
+          {skill}
+        </Badge>
+      </div>
+    );
+  };
 
   return (
     <section id="skills" className="py-20 px-6 md:px-8 bg-hero-gradient relative overflow-hidden">
@@ -260,9 +369,8 @@ const Skills = () => {
           ))}
         </div>
 
-        {/* Skills Visualization - Interactive Grid */}
+        {/* Skills Visualization */}
         {selectedCategory === null ? (
-          /* Full constellation view - all categories as cards */
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skillCategories.map((category) => (
               <Spotlight key={category.id}>
@@ -293,18 +401,7 @@ const Skills = () => {
                   <CardContent>
                     <div className="flex flex-wrap gap-1.5">
                       {category.skills.slice(0, 12).map((skill) => (
-                        <Badge 
-                          key={skill}
-                          variant="secondary" 
-                          className="text-xs transition-all duration-200 hover:scale-105"
-                          style={{ 
-                            backgroundColor: category.color + '15',
-                            color: category.color,
-                            borderColor: category.color + '30'
-                          }}
-                        >
-                          {skill}
-                        </Badge>
+                        <SkillBadge key={skill} skill={skill} category={category} />
                       ))}
                       {category.skills.length > 12 && (
                         <Badge variant="outline" className="text-xs text-foreground/50">
@@ -318,7 +415,6 @@ const Skills = () => {
             ))}
           </div>
         ) : (
-          /* Expanded category view */
           <div className="space-y-8">
             <Spotlight>
               <Card className="bg-card-gradient border-primary/20">
@@ -350,30 +446,13 @@ const Skills = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-3">
-                    {filteredSkills.map((skill, index) => (
-                      <div
-                        key={skill}
-                        className="group relative"
-                        onMouseEnter={() => setHoveredSkill(skill)}
-                        onMouseLeave={() => setHoveredSkill(null)}
-                      >
-                        <Badge
-                          className="text-sm px-4 py-2 cursor-default transition-all duration-300 hover:scale-110 hover:shadow-lg"
-                          style={{
-                            backgroundColor: hoveredSkill === skill 
-                              ? skillCategories.find(c => c.id === selectedCategory)?.color
-                              : skillCategories.find(c => c.id === selectedCategory)?.color + '20',
-                            color: hoveredSkill === skill 
-                              ? 'white'
-                              : skillCategories.find(c => c.id === selectedCategory)?.color,
-                            borderColor: skillCategories.find(c => c.id === selectedCategory)?.color + '50',
-                            animationDelay: `${index * 50}ms`,
-                            transform: hoveredSkill === skill ? 'scale(1.15)' : 'scale(1)'
-                          }}
-                        >
-                          {skill}
-                        </Badge>
-                      </div>
+                    {filteredSkills.map((skill) => (
+                      <SkillBadge 
+                        key={skill} 
+                        skill={skill} 
+                        category={skillCategories.find(c => c.id === selectedCategory)}
+                        isExpanded={true}
+                      />
                     ))}
                   </div>
                 </CardContent>

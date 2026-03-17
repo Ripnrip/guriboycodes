@@ -4,10 +4,11 @@ import { Badge } from '@/components/ui/badge.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Spotlight } from '@/components/ui/spotlight.jsx';
 import { AnimatedCounter } from '@/components/ui/animated-counter.jsx';
-import { Trophy, MapPin, Calendar, Users, Tv, Award, Globe, Code, ExternalLink, Github, Play, Video } from 'lucide-react';
+import { Trophy, MapPin, Calendar, Users, Tv, Award, Globe, Code, ExternalLink, Github, Play, Video, Sparkles } from 'lucide-react';
 
 const Hackathons = () => {
   const [selectedHackathon, setSelectedHackathon] = useState(null);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
 
   const hackathons = [
     {
@@ -102,62 +103,44 @@ const Hackathons = () => {
       featured: true,
       flag: "🇺🇸",
       links: {}
-    },
-    {
-      id: 6,
-      name: "UPC Barcelona",
-      year: "2016",
-      location: "Barcelona, Spain",
-      result: "🌟 Open Source",
-      participants: "250+",
-      project: "Refugee Crowdsourcing App",
-      description: "Crowdsourcing app with local whereabouts for refugees - pinned locations for safety, danger, and help.",
-      longDescription: "Built a crowdsourcing app with local whereabouts for refugees - pinned locations for safety, danger, and help. The project was open-sourced on GitHub to help the refugee community.",
-      technologies: ["Mobile", "Crowdsourcing", "Social Impact", "Open Source"],
-      media: "GitHub Open Source",
-      featured: false,
-      flag: "🇪🇸",
-      links: {}
-    },
-    {
-      id: 7,
-      name: "Copenhacks",
-      year: "2017",
-      location: "Copenhagen, Denmark",
-      result: "🚀 Participant",
-      participants: "200+",
-      project: "Innovation Project",
-      description: "Innovative tech solution at Microsoft Copenhagen.",
-      longDescription: "Participated in Copenhacks held at Microsoft in Copenhagen, Denmark, working on innovative technology solutions and networking with international developers.",
-      technologies: ["Various", "Innovation", "Microsoft Technologies"],
-      media: "Microsoft Venue",
-      featured: false,
-      flag: "🇩🇰",
-      links: {}
-    },
-    {
-      id: 8,
-      name: "HackNY",
-      year: "2016",
-      location: "New York, USA",
-      result: "🚀 Participant",
-      participants: "400+",
-      project: "NYC Innovation",
-      description: "Premier NYC hackathon at New York University.",
-      longDescription: "Participated in one of NYC's premier hackathons held at New York University, focusing on innovative solutions for urban challenges and technology advancement.",
-      technologies: ["Web", "Mobile", "Urban Tech"],
-      media: "NYU Venue",
-      featured: false,
-      flag: "🇺🇸",
-      links: {}
     }
   ];
 
   const stats = [
     { label: "Total Hackathons", value: 28, icon: <Code className="h-6 w-6" /> },
     { label: "Countries Visited", value: 6, icon: <Globe className="h-6 w-6" /> },
-    { label: "1st Place Wins", value: 3, icon: <Trophy className="h-6 w-6" /> },
-    { label: "Years Active", value: 9, icon: <Calendar className="h-6 w-6" /> }
+    { label: "1st Place Wins", value: 2, icon: <Trophy className="h-6 w-6" /> }
+  ];
+
+  const featuredVideos = [
+    {
+      id: 'drone-bbc',
+      title: 'London Drone SAR (MLH Prime 2017)',
+      description: 'BBC coverage of my first place win at MLH Prime London.',
+      src: '/videos/mlh-2017-drone-bbc.mp4',
+      badge: '🇬🇧 BBC Documentary'
+    },
+    {
+      id: 'aron-fitness',
+      title: 'HackZurich - Aron AI Fitness',
+      description: 'AI fitness app demo with CreateML, CoreML, ARKit, and Garmin wearables.',
+      src: '/videos/hackzurich-aron.mp4',
+      badge: '🇨🇭 HackZurich 2021'
+    },
+    {
+      id: 'carly-ar',
+      title: 'HackZurich - Carly AR Visualizer',
+      description: 'AR car configurator demo from HackZurich 2.0.',
+      src: '/videos/hackzurich-carly-ar.mp4',
+      badge: '🇨🇭 HackZurich 2018'
+    },
+    {
+      id: 'journey',
+      title: 'HackZurich - Journey',
+      description: 'Atmosphere and highlights from my HackZurich journey.',
+      src: '/videos/hackzurich-2018-journey.mp4',
+      badge: '🇨🇭 HackZurich'
+    }
   ];
 
   return (
@@ -173,8 +156,8 @@ const Hackathons = () => {
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        {/* Stats - 3 items */}
+        <div className="grid grid-cols-3 gap-6 mb-16 max-w-3xl mx-auto">
           {stats.map((stat, index) => (
             <Spotlight key={index}>
               <Card className="glass text-center">
@@ -192,51 +175,48 @@ const Hackathons = () => {
           ))}
         </div>
 
-        {/* Featured YouTube Video */}
+        {/* Featured Media - All 4 Videos */}
         <div className="mb-16">
-          <h3 className="text-2xl font-bold text-center mb-8 text-gradient">Featured Demo</h3>
-          <div className="max-w-3xl mx-auto">
-            <Spotlight>
-              <Card className="bg-card-gradient border-primary/50 overflow-hidden">
-                <div className="aspect-video">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/56jSyTk24VE"
-                    title="Aron AI Fitness App - HackZurich 2021 Demo"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="rounded-t-lg"
-                  />
-                </div>
-                <CardContent className="pt-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-lg font-semibold text-primary">Aron - AI Fitness App Demo</h4>
-                    <Badge className="bg-gradient-to-r from-primary to-accent text-primary-foreground">
-                      HackZurich 2021
-                    </Badge>
+          <h3 className="text-2xl font-bold text-center mb-8 text-gradient">Featured Media</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {featuredVideos.map((video) => (
+              <Spotlight key={video.id}>
+                <Card className="bg-card-gradient border-primary/20 overflow-hidden group hover:border-primary/50 transition-all duration-300">
+                  <div className="flex flex-col sm:flex-row">
+                    <div className="sm:w-2/5 relative">
+                      <video
+                        className="w-full h-full object-cover min-h-[160px]"
+                        preload="metadata"
+                        controls
+                        playsInline
+                        poster=""
+                      >
+                        <source src={video.src} type="video/mp4" />
+                      </video>
+                    </div>
+                    <div className="sm:w-3/5 p-4 flex flex-col justify-center">
+                      <Badge className="w-fit mb-2 bg-primary/10 text-primary text-xs">
+                        {video.badge}
+                      </Badge>
+                      <h4 className="font-semibold text-foreground mb-1">{video.title}</h4>
+                      <p className="text-sm text-foreground/60">{video.description}</p>
+                    </div>
                   </div>
-                  <p className="text-sm text-foreground/70 mb-3">
-                    AI-powered fitness app using CreateML, CoreML, ARKit, and Garmin wearables for real-time body pose detection and workout tracking. Achieved 93%+ ML accuracy.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <a href="https://github.com/Ripnrip/ARon" target="_blank" rel="noopener noreferrer"
-                       className="inline-flex items-center gap-1 text-xs bg-primary/10 text-primary px-3 py-1 rounded-full hover:bg-primary/20 transition-colors">
-                      <Github className="h-3 w-3" /> GitHub Repo
-                    </a>
-                    <a href="https://devpost.com/software/aron-app-make-wellness-fitness-better" target="_blank" rel="noopener noreferrer"
-                       className="inline-flex items-center gap-1 text-xs bg-primary/10 text-primary px-3 py-1 rounded-full hover:bg-primary/20 transition-colors">
-                      <ExternalLink className="h-3 w-3" /> Devpost
-                    </a>
-                    <a href="https://www.linkedin.com/feed/update/urn:li:activity:6848583120539807744/" target="_blank" rel="noopener noreferrer"
-                       className="inline-flex items-center gap-1 text-xs bg-primary/10 text-primary px-3 py-1 rounded-full hover:bg-primary/20 transition-colors">
-                      <ExternalLink className="h-3 w-3" /> LinkedIn Post
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            </Spotlight>
+                </Card>
+              </Spotlight>
+            ))}
+          </div>
+
+          {/* Easter Egg Button */}
+          <div className="text-center mt-8">
+            <button
+              onClick={() => setShowEasterEgg(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/30 text-foreground/70 hover:text-foreground hover:border-primary/60 hover:from-primary/30 hover:to-accent/30 transition-all duration-300 hover:scale-105 group"
+            >
+              <Sparkles className="h-4 w-4 text-primary group-hover:animate-spin" />
+              <span className="text-sm font-medium">Click to preview what it's like working with me</span>
+              <Sparkles className="h-4 w-4 text-accent group-hover:animate-spin" />
+            </button>
           </div>
         </div>
 
@@ -270,7 +250,6 @@ const Hackathons = () => {
                     <h4 className="font-semibold mb-2 text-primary">{hackathon.project}</h4>
                     <p className="text-sm text-foreground/80 mb-3">{hackathon.description}</p>
                     
-                    {/* Quick Links */}
                     {hackathon.links && Object.keys(hackathon.links).length > 0 && (
                       <div className="flex flex-wrap gap-1 mb-3">
                         {hackathon.links.github && (
@@ -314,40 +293,6 @@ const Hackathons = () => {
                         <span>{hackathon.media}</span>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </Spotlight>
-            ))}
-          </div>
-        </div>
-
-        {/* All Hackathons Timeline */}
-        <div>
-          <h3 className="text-2xl font-bold text-center mb-8 text-gradient">Complete Journey</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {hackathons.map((hackathon) => (
-              <Spotlight key={hackathon.id}>
-                <Card 
-                  className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
-                    hackathon.featured 
-                      ? 'bg-card-gradient border-primary/50' 
-                      : 'bg-card/60 hover:bg-card-gradient/50 border-border/50'
-                  } hover:border-primary/50`}
-                  onClick={() => setSelectedHackathon(hackathon)}
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="text-xl">{hackathon.flag}</div>
-                      <Badge variant={hackathon.result.includes('1st') ? 'default' : 'secondary'}>
-                        {hackathon.result}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-base">{hackathon.name}</CardTitle>
-                    <CardDescription className="text-sm">{hackathon.location} • {hackathon.year}</CardDescription>
-                  </CardHeader>
-                  
-                  <CardContent className="pt-0">
-                    <p className="text-sm text-foreground/80">{hackathon.project}</p>
                   </CardContent>
                 </Card>
               </Spotlight>
@@ -399,7 +344,6 @@ const Hackathons = () => {
                     </div>
                   </div>
 
-                  {/* Embedded YouTube Video in Modal */}
                   {selectedHackathon.links?.youtube && (
                     <div className="aspect-video rounded-lg overflow-hidden">
                       <iframe
@@ -421,7 +365,6 @@ const Hackathons = () => {
                     </p>
                   </div>
 
-                  {/* Team */}
                   {selectedHackathon.team && selectedHackathon.team.length > 0 && (
                     <div>
                       <h4 className="text-lg font-semibold mb-2 text-foreground">Team</h4>
@@ -439,14 +382,13 @@ const Hackathons = () => {
                     <h4 className="text-lg font-semibold mb-3 text-foreground">Technologies Used</h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedHackathon.technologies.map((tech, index) => (
-                        <Badge key={index} variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+                        <Badge key={index} variant="secondary" className="bg-primary/10 text-primary">
                           {tech}
                         </Badge>
                       ))}
                     </div>
                   </div>
 
-                  {/* Links */}
                   {selectedHackathon.links && Object.keys(selectedHackathon.links).length > 0 && (
                     <div>
                       <h4 className="text-lg font-semibold mb-3 text-foreground">Links</h4>
@@ -492,6 +434,47 @@ const Hackathons = () => {
                 </CardContent>
               </Card>
             </Spotlight>
+          </div>
+        )}
+
+        {/* Easter Egg Modal - Working With Me Video */}
+        {showEasterEgg && (
+          <div className="fixed inset-0 bg-background/90 backdrop-blur-md z-50 flex items-center justify-center p-4"
+               onClick={() => setShowEasterEgg(false)}>
+            <div className="max-w-2xl w-full" onClick={(e) => e.stopPropagation()}>
+              <Card className="bg-card-gradient border-primary/50 overflow-hidden">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">🎬</div>
+                      <div>
+                        <CardTitle className="text-xl text-gradient">Working With Me</CardTitle>
+                        <CardDescription className="text-foreground/60">A day in the life...</CardDescription>
+                      </div>
+                    </div>
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => setShowEasterEgg(false)}
+                      className="text-foreground/60 hover:text-foreground"
+                    >
+                      ✕
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="aspect-video rounded-lg overflow-hidden bg-black">
+                    <video
+                      className="w-full h-full object-contain"
+                      controls
+                      autoPlay
+                      playsInline
+                    >
+                      <source src="/videos/working-with-me.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         )}
       </div>

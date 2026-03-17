@@ -123,7 +123,7 @@ const Hero = () => {
 
         {/* Marquee Ticker */}
         <div className="py-8 border-t border-border/20">
-          <Marquee className="text-foreground/60" speed={30}>
+          <Marquee className="text-foreground/60" speed={60}>
             <span className="mx-8">🚀 Staff Software Engineer (Mobile & AI)</span>
             <span className="mx-8">📱 90M Venmo Users</span>
             <span className="mx-8">🤖 Project Mercury — AI-Powered Agentic E-Commerce</span>
