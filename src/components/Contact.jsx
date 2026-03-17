@@ -56,7 +56,7 @@ const Contact = () => {
                 <CardContent className="space-y-6">
                   <div className="flex items-center space-x-3">
                     <MapPin className="h-5 w-5 text-primary" />
-                    <span className="text-foreground/80">San Jose, CA</span>
+                    <span className="text-foreground/80">Tampa, FL (Open Remote + Hybrid NYC)</span>
                   </div>
                   
                   <div className="flex items-center space-x-3">

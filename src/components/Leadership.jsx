@@ -25,12 +25,9 @@ import {
 
 const Leadership = () => {
   const achievements = [
-    { icon: <Code className="h-5 w-5" />, label: "Technical Interviews", value: 500, suffix: "+" },
-    { icon: <Users className="h-5 w-5" />, label: "Engineers Mentored", value: 20, suffix: "+" },
-    { icon: <Trophy className="h-5 w-5" />, label: "ERG Members", value: 150, suffix: "+" },
-    { icon: <GraduationCap className="h-5 w-5" />, label: "Students Reached", value: 500, suffix: "+" },
-    { icon: <Briefcase className="h-5 w-5" />, label: "Years Experience", value: 10, suffix: "+" },
-    { icon: <Zap className="h-5 w-5" />, label: "Community Events", value: 25, suffix: "+" }
+    { icon: <Code className="h-6 w-6" />, label: "Technical Interviews Conducted", value: 500, suffix: "+" },
+    { icon: <GraduationCap className="h-6 w-6" />, label: "Students Reached", value: 200, suffix: "+" },
+    { icon: <Users className="h-6 w-6" />, label: "ERG Members", value: 150, suffix: "+" }
   ];
 
   const initiatives = [
@@ -48,7 +45,7 @@ const Leadership = () => {
         "Industry trend analysis and future skills mapping",
         "Student mentorship and career guidance"
       ],
-      impact: "500+ students reached through curriculum improvements"
+      impact: "200+ students reached through curriculum improvements"
     },
     {
       title: "Sikh Faith ERG Leadership",
@@ -81,22 +78,6 @@ const Leadership = () => {
         "Knowledge sharing through internal tech talks"
       ],
       impact: "20+ engineers promoted under mentorship"
-    },
-    {
-      title: "Community Tech Education",
-      role: "Volunteer Educator",
-      organization: "Local Schools & Organizations",
-      period: "2018 - Present",
-      icon: <BookOpen className="h-6 w-6" />,
-      color: "from-orange-500 to-red-500",
-      description: "Volunteering time to teach coding, mobile development, and AI/ML concepts to underrepresented communities.",
-      achievements: [
-        "Coding workshops for underrepresented youth",
-        "Mobile app development bootcamps",
-        "AI/ML awareness sessions for educators",
-        "Open source contributions and tutorials"
-      ],
-      impact: "200+ hours of volunteer education"
     }
   ];
 
@@ -129,54 +110,27 @@ const Leadership = () => {
           </p>
         </div>
 
-        {/* Technical Interviews Showcase */}
+        {/* Three Key Stats */}
         <div className="mb-16">
-          <Spotlight>
-            <Card className="bg-card-gradient border-primary/20 overflow-hidden">
-              <CardContent className="p-12 text-center">
-                <div className="max-w-4xl mx-auto">
-                  <div className="mb-8">
-                    <div className="text-6xl lg:text-7xl font-bold text-gradient mb-4">
-                      <AnimatedCounter end={500} suffix="+" />
-                    </div>
-                    <h3 className="text-3xl lg:text-4xl font-semibold text-foreground mb-4">
-                      Technical Interviews Conducted
-                    </h3>
-                    <p className="text-xl text-foreground/70 mb-8">
-                      Fostering the next generation of engineers at PayPal and beyond
-                    </p>
-                  </div>
-                  
-                  {/* Achievement grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                    {achievements.slice(1).map((achievement, index) => (
-                      <div 
-                        key={achievement.label}
-                        className="text-center p-6 rounded-lg bg-background/50 backdrop-blur-sm hover:bg-background/70 transition-all duration-300"
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="flex justify-center mb-4">
-                          <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                            {achievement.icon}
-                          </div>
-                        </div>
-                        <div className="text-3xl font-bold text-gradient mb-2">
-                          <AnimatedCounter end={achievement.value} suffix={achievement.suffix} />
-                        </div>
-                        <p className="text-sm text-foreground/70">{achievement.label}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {achievements.map((achievement) => (
+              <Spotlight key={achievement.label}>
+                <Card className="bg-card-gradient border-primary/20 text-center">
+                  <CardContent className="p-10">
+                    <div className="flex justify-center mb-5">
+                      <div className="p-4 rounded-xl bg-primary/10 text-primary">
+                        {achievement.icon}
                       </div>
-                    ))}
-                  </div>
-                  
-                  <div className="mt-8 p-6 rounded-lg bg-primary/10">
-                    <p className="text-primary font-medium text-lg">
-                      "Building communities through mentorship and inclusive leadership"
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </Spotlight>
+                    </div>
+                    <div className="text-5xl lg:text-6xl font-bold text-gradient mb-3">
+                      <AnimatedCounter end={achievement.value} suffix={achievement.suffix} />
+                    </div>
+                    <p className="text-lg text-foreground/70 font-medium">{achievement.label}</p>
+                  </CardContent>
+                </Card>
+              </Spotlight>
+            ))}
+          </div>
         </div>
 
         {/* Leadership Initiatives */}
@@ -340,4 +294,3 @@ const Leadership = () => {
 };
 
 export default Leadership;
-
