@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import Projects from './components/Projects.jsx';
+import Skills from './components/Skills.jsx';
 import Hackathons from './components/Hackathons.jsx';
 import Leadership from './components/Leadership.jsx';
 import Contact from './components/Contact.jsx';
@@ -13,6 +14,7 @@ function App() {
       <Hero />
       <About />
       <Projects />
+      <Skills />
       <Hackathons />
       <Leadership />
       <Contact />

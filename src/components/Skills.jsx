@@ -1,233 +1,405 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx';
+import React, { useState, useEffect, useRef } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { Badge } from '@/components/ui/badge.jsx';
 import { Spotlight } from '@/components/ui/spotlight.jsx';
-import { 
-  Smartphone, 
-  Brain, 
-  Cloud, 
-  Database, 
-  Code, 
-  Palette,
-  Zap,
-  Globe,
-  Cpu,
-  GitBranch
-} from 'lucide-react';
 
 const Skills = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [hoveredSkill, setHoveredSkill] = useState(null);
+  const canvasRef = useRef(null);
+  const animationRef = useRef(null);
 
+  // Comprehensive skills data organized by category with connections
   const skillCategories = [
     {
       id: 'mobile',
-      title: 'Mobile Development',
-      icon: <Smartphone className="h-6 w-6" />,
-      color: 'from-blue-500 to-cyan-500',
+      title: 'Mobile',
+      color: '#3B82F6',
+      icon: '📱',
       skills: [
-        { name: 'Swift', level: 95, icon: '🔶' },
-        { name: 'SwiftUI', level: 90, icon: '📱' },
-        { name: 'iOS SDK', level: 95, icon: '🍎' },
-        { name: 'Objective-C', level: 85, icon: '⚙️' },
-        { name: 'Flutter', level: 80, icon: '🦋' },
-        { name: 'Dart', level: 75, icon: '🎯' },
-        { name: 'React Native', level: 70, icon: '⚛️' }
+        'Swift', 'SwiftUI', 'UIKit', 'Objective-C', 'SwiftData', 'Core Data',
+        'ARKit', 'RoomPlan', 'BLE', 'NFC', 'MapKit',
+        'CoreML', 'MLX', 'RxSwift', 'Combine',
+        'Flutter', 'Dart', 'React Native',
+        'ActivityKit', 'WidgetKit', 'Dynamic Island',
+        'Xcode', 'Fastlane', 'TestFlight'
       ]
     },
     {
       id: 'ai-ml',
-      title: 'AI/ML & Data',
-      icon: <Brain className="h-6 w-6" />,
-      color: 'from-purple-500 to-pink-500',
+      title: 'AI/ML',
+      color: '#A855F7',
+      icon: '🤖',
       skills: [
-        { name: 'CoreML', level: 90, icon: '🧠' },
-        { name: 'MLX', level: 85, icon: '🔬' },
-        { name: 'RAG Systems', level: 88, icon: '🔍' },
-        { name: 'ChromaDB', level: 80, icon: '🗄️' },
-        { name: 'OpenAI APIs', level: 85, icon: '🤖' },
-        { name: 'Vector Databases', level: 82, icon: '📊' },
-        { name: 'Python ML', level: 75, icon: '🐍' }
+        'Python', 'PyTorch', 'CoreML', 'MLX',
+        'OpenAI', 'Anthropic', 'Gemini', 'Llama',
+        'LangChain', 'LlamaIndex', 'CrewAI', 'N8N',
+        'MCP Servers', 'RAG', 'GraphRAG', 'Vector Stores',
+        'SDXL', 'LoRA', 'Stable Diffusion',
+        'YOLO', 'OpenCV', 'Computer Vision',
+        'Whisper', 'ElevenLabs',
+        'Agentic AI', 'Agent0'
       ]
     },
     {
-      id: 'backend',
-      title: 'Backend & Cloud',
-      icon: <Cloud className="h-6 w-6" />,
-      color: 'from-green-500 to-emerald-500',
+      id: 'cloud',
+      title: 'Cloud & DevOps',
+      color: '#10B981',
+      icon: '☁️',
       skills: [
-        { name: 'Node.js', level: 80, icon: '🟢' },
-        { name: 'AWS', level: 85, icon: '☁️' },
-        { name: 'Serverless', level: 82, icon: '⚡' },
-        { name: 'DynamoDB', level: 78, icon: '🗃️' },
-        { name: 'Lambda', level: 80, icon: '🔧' },
-        { name: 'API Design', level: 90, icon: '🔗' },
-        { name: 'Microservices', level: 85, icon: '🏗️' }
+        'AWS Lambda', 'AWS EC2', 'AWS S3',
+        'GCP', 'Vertex AI', 'Azure',
+        'Docker', 'Kubernetes',
+        'Supabase', 'Firebase',
+        'GitHub Actions', 'Jenkins', 'CI/CD',
+        'Vercel', 'Cloudflare R2',
+        'Serverless', 'Microservices'
       ]
     },
     {
-      id: 'frontend',
-      title: 'Frontend & Web',
-      icon: <Globe className="h-6 w-6" />,
-      color: 'from-orange-500 to-red-500',
+      id: 'data',
+      title: 'Data & APIs',
+      color: '#F59E0B',
+      icon: '💾',
       skills: [
-        { name: 'React', level: 88, icon: '⚛️' },
-        { name: 'Next.js', level: 85, icon: '▲' },
-        { name: 'TypeScript', level: 82, icon: '📘' },
-        { name: 'Tailwind CSS', level: 90, icon: '🎨' },
-        { name: 'JavaScript', level: 90, icon: '💛' },
-        { name: 'HTML/CSS', level: 95, icon: '🌐' },
-        { name: 'Vite', level: 80, icon: '⚡' }
+        'PostgreSQL', 'MongoDB', 'DynamoDB',
+        'Pinecone', 'ChromaDB', 'Qdrant', 'Redis',
+        'GraphQL', 'REST APIs',
+        'Amplitude', 'DataDog',
+        'TDD', 'Agile', 'Jira'
       ]
     },
     {
-      id: 'tools',
-      title: 'Tools & Platforms',
-      icon: <GitBranch className="h-6 w-6" />,
-      color: 'from-gray-500 to-slate-500',
+      id: 'web',
+      title: 'Web & Frontend',
+      color: '#EF4444',
+      icon: '🌐',
       skills: [
-        { name: 'Xcode', level: 95, icon: '🔨' },
-        { name: 'Git', level: 90, icon: '📝' },
-        { name: 'GitHub', level: 88, icon: '🐙' },
-        { name: 'Figma', level: 75, icon: '🎨' },
-        { name: 'Supabase', level: 80, icon: '🔥' },
-        { name: 'Vercel', level: 85, icon: '▲' },
-        { name: 'Docker', level: 70, icon: '🐳' }
+        'React', 'Next.js', 'TypeScript', 'JavaScript',
+        'Tailwind CSS', 'Vite', 'HTML/CSS',
+        'Node.js', 'Express',
+        'Strapi', 'Figma', 'Cursor',
+        'Framer Motion', 'Three.js'
+      ]
+    },
+    {
+      id: 'platforms',
+      title: 'Platforms & Hardware',
+      color: '#06B6D4',
+      icon: '🔧',
+      skills: [
+        'iOS', 'iPadOS', 'watchOS', 'visionOS',
+        'Android', 'Web',
+        'Garmin SDK', 'Nordic Semiconductor',
+        'Google Eddystone', 'Bluetooth LE',
+        'NFC', 'QR Codes'
       ]
     }
   ];
 
-  const filteredCategories = selectedCategory === 'all' 
-    ? skillCategories 
-    : skillCategories.filter(cat => cat.id === selectedCategory);
+  // Get all unique skills
+  const allSkills = [...new Set(skillCategories.flatMap(cat => cat.skills))];
+
+  // Canvas constellation animation
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+    };
+    
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Create particles for constellation
+    const particles = [];
+    const numParticles = 80;
+    const rect = canvas.getBoundingClientRect();
+    
+    for (let i = 0; i < numParticles; i++) {
+      const catIndex = i % skillCategories.length;
+      particles.push({
+        x: Math.random() * rect.width,
+        y: Math.random() * rect.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: Math.random() * 2 + 1,
+        color: skillCategories[catIndex].color,
+        alpha: Math.random() * 0.5 + 0.3,
+        category: catIndex
+      });
+    }
+
+    const animate = () => {
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 120) {
+            const alpha = (1 - dist / 120) * 0.15;
+            const isSelected = selectedCategory !== null && 
+              (particles[i].category === skillCategories.findIndex(c => c.id === selectedCategory) ||
+               particles[j].category === skillCategories.findIndex(c => c.id === selectedCategory));
+            
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = isSelected 
+              ? `rgba(168, 85, 247, ${alpha * 3})`
+              : `rgba(168, 85, 247, ${alpha})`;
+            ctx.lineWidth = isSelected ? 1.5 : 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw and update particles
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        
+        if (p.x < 0 || p.x > rect.width) p.vx *= -1;
+        if (p.y < 0 || p.y > rect.height) p.vy *= -1;
+
+        const isSelected = selectedCategory !== null && 
+          p.category === skillCategories.findIndex(c => c.id === selectedCategory);
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, isSelected ? p.radius * 2 : p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + (isSelected ? 'FF' : '80');
+        ctx.fill();
+        
+        if (isSelected) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius * 4, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + '20';
+          ctx.fill();
+        }
+      });
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [selectedCategory]);
+
+  const filteredSkills = selectedCategory 
+    ? skillCategories.find(c => c.id === selectedCategory)?.skills || []
+    : [];
+
+  const totalSkills = allSkills.length;
 
   return (
-    <section className="py-20 px-6 md:px-8 bg-hero-gradient">
-      <div className="max-w-7xl mx-auto">
+    <section id="skills" className="py-20 px-6 md:px-8 bg-hero-gradient relative overflow-hidden">
+      {/* Constellation Canvas Background */}
+      <canvas 
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ opacity: 0.6 }}
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
-            Technical Expertise
+            Technical Constellation
           </h2>
           <p className="text-xl text-foreground/80 max-w-3xl mx-auto">
-            A comprehensive toolkit spanning mobile development, AI/ML, cloud architecture, 
-            and modern web technologies - built through a decade of hands-on experience.
+            {totalSkills}+ technologies across 6 domains — a decade of building at the intersection of 
+            mobile, AI/ML, cloud, and creative engineering.
           </p>
         </div>
 
-        {/* Category Filter */}
+        {/* Category Orbit Selector */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           <button
-            onClick={() => setSelectedCategory('all')}
-            className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-              selectedCategory === 'all'
-                ? 'bg-primary text-primary-foreground shadow-lg'
-                : 'bg-card/50 text-foreground/70 hover:bg-card hover:text-foreground'
+            onClick={() => setSelectedCategory(null)}
+            className={`px-5 py-3 rounded-xl transition-all duration-500 font-medium ${
+              selectedCategory === null
+                ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30 scale-105'
+                : 'bg-card/50 text-foreground/70 hover:bg-card hover:text-foreground border border-border/50'
             }`}
           >
-            All Skills
+            All ({totalSkills})
           </button>
           {skillCategories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-4 py-2 rounded-lg transition-all duration-300 flex items-center space-x-2 ${
+              onClick={() => setSelectedCategory(selectedCategory === category.id ? null : category.id)}
+              className={`px-5 py-3 rounded-xl transition-all duration-500 font-medium flex items-center gap-2 ${
                 selectedCategory === category.id
-                  ? 'bg-primary text-primary-foreground shadow-lg'
-                  : 'bg-card/50 text-foreground/70 hover:bg-card hover:text-foreground'
+                  ? 'text-white shadow-lg scale-105'
+                  : 'bg-card/50 text-foreground/70 hover:bg-card hover:text-foreground border border-border/50'
               }`}
+              style={selectedCategory === category.id ? { 
+                backgroundColor: category.color,
+                boxShadow: `0 10px 25px ${category.color}40`
+              } : {}}
             >
-              {category.icon}
+              <span>{category.icon}</span>
               <span>{category.title}</span>
+              <span className="text-xs opacity-70">({category.skills.length})</span>
             </button>
           ))}
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {filteredCategories.map((category) => (
-            <Spotlight key={category.id}>
-              <Card className="bg-card-gradient border-primary/20 h-full">
+        {/* Skills Visualization - Interactive Grid */}
+        {selectedCategory === null ? (
+          /* Full constellation view - all categories as cards */
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skillCategories.map((category) => (
+              <Spotlight key={category.id}>
+                <Card 
+                  className="bg-card-gradient border-primary/20 h-full cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group"
+                  onClick={() => setSelectedCategory(category.id)}
+                >
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div 
+                          className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-transform duration-300 group-hover:scale-110"
+                          style={{ backgroundColor: category.color + '20' }}
+                        >
+                          {category.icon}
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg">{category.title}</CardTitle>
+                          <p className="text-sm text-foreground/60">{category.skills.length} technologies</p>
+                        </div>
+                      </div>
+                      <div 
+                        className="w-3 h-3 rounded-full animate-pulse"
+                        style={{ backgroundColor: category.color }}
+                      />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-1.5">
+                      {category.skills.slice(0, 12).map((skill) => (
+                        <Badge 
+                          key={skill}
+                          variant="secondary" 
+                          className="text-xs transition-all duration-200 hover:scale-105"
+                          style={{ 
+                            backgroundColor: category.color + '15',
+                            color: category.color,
+                            borderColor: category.color + '30'
+                          }}
+                        >
+                          {skill}
+                        </Badge>
+                      ))}
+                      {category.skills.length > 12 && (
+                        <Badge variant="outline" className="text-xs text-foreground/50">
+                          +{category.skills.length - 12} more
+                        </Badge>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </Spotlight>
+            ))}
+          </div>
+        ) : (
+          /* Expanded category view */
+          <div className="space-y-8">
+            <Spotlight>
+              <Card className="bg-card-gradient border-primary/20">
                 <CardHeader>
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-3 rounded-lg bg-gradient-to-r ${category.color} text-white`}>
-                      {category.icon}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div 
+                        className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl"
+                        style={{ backgroundColor: skillCategories.find(c => c.id === selectedCategory)?.color + '20' }}
+                      >
+                        {skillCategories.find(c => c.id === selectedCategory)?.icon}
+                      </div>
+                      <div>
+                        <CardTitle className="text-2xl text-gradient">
+                          {skillCategories.find(c => c.id === selectedCategory)?.title}
+                        </CardTitle>
+                        <p className="text-foreground/60">
+                          {filteredSkills.length} technologies in this domain
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <CardTitle className="text-xl text-gradient">{category.title}</CardTitle>
-                      <CardDescription className="text-foreground/70">
-                        {category.skills.length} technologies
-                      </CardDescription>
-                    </div>
+                    <button 
+                      onClick={() => setSelectedCategory(null)}
+                      className="text-foreground/40 hover:text-foreground transition-colors text-xl"
+                    >
+                      ✕
+                    </button>
                   </div>
                 </CardHeader>
-                
                 <CardContent>
-                  <div className="space-y-4">
-                    {category.skills.map((skill, index) => (
-                      <div key={skill.name} className="group">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center space-x-2">
-                            <span className="text-lg">{skill.icon}</span>
-                            <span className="font-medium text-foreground">{skill.name}</span>
-                          </div>
-                          <Badge variant="secondary" className="bg-primary/10 text-primary">
-                            {skill.level}%
-                          </Badge>
-                        </div>
-                        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                          <div 
-                            className={`h-full bg-gradient-to-r ${category.color} rounded-full transition-all duration-1000 ease-out group-hover:animate-pulse`}
-                            style={{ 
-                              width: `${skill.level}%`,
-                              animationDelay: `${index * 100}ms`
-                            }}
-                          />
-                        </div>
+                  <div className="flex flex-wrap gap-3">
+                    {filteredSkills.map((skill, index) => (
+                      <div
+                        key={skill}
+                        className="group relative"
+                        onMouseEnter={() => setHoveredSkill(skill)}
+                        onMouseLeave={() => setHoveredSkill(null)}
+                      >
+                        <Badge
+                          className="text-sm px-4 py-2 cursor-default transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                          style={{
+                            backgroundColor: hoveredSkill === skill 
+                              ? skillCategories.find(c => c.id === selectedCategory)?.color
+                              : skillCategories.find(c => c.id === selectedCategory)?.color + '20',
+                            color: hoveredSkill === skill 
+                              ? 'white'
+                              : skillCategories.find(c => c.id === selectedCategory)?.color,
+                            borderColor: skillCategories.find(c => c.id === selectedCategory)?.color + '50',
+                            animationDelay: `${index * 50}ms`,
+                            transform: hoveredSkill === skill ? 'scale(1.15)' : 'scale(1)'
+                          }}
+                        >
+                          {skill}
+                        </Badge>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
             </Spotlight>
-          ))}
-        </div>
+          </div>
+        )}
 
-        {/* Certifications & Achievements */}
-        <div className="mt-16">
-          <Spotlight>
-            <Card className="bg-card-gradient border-primary/20">
-              <CardHeader>
-                <CardTitle className="text-2xl text-gradient text-center">
-                  Professional Achievements
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent>
-                <div className="grid md:grid-cols-3 gap-8 text-center">
-                  <div>
-                    <Zap className="h-12 w-12 text-primary mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">Patents & IP</h3>
-                    <p className="text-foreground/80">
-                      AI/ML patent applications and innovative mobile solutions
-                    </p>
-                  </div>
-                  <div>
-                    <Cpu className="h-12 w-12 text-primary mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">Architecture</h3>
-                    <p className="text-foreground/80">
-                      High-Level Design (HLD) leadership for cross-org systems
-                    </p>
-                  </div>
-                  <div>
-                    <Database className="h-12 w-12 text-primary mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">Scale</h3>
-                    <p className="text-foreground/80">
-                      Systems serving 92M+ users with enterprise-grade reliability
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </Spotlight>
+        {/* Bottom stats bar */}
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { label: 'Languages', count: '8+', detail: 'Swift, Python, TS, Dart...' },
+            { label: 'Frameworks', count: '25+', detail: 'SwiftUI, React, LangChain...' },
+            { label: 'Cloud Services', count: '15+', detail: 'AWS, GCP, Azure, Vercel...' },
+            { label: 'AI/ML Tools', count: '20+', detail: 'PyTorch, CoreML, RAG...' }
+          ].map((stat) => (
+            <Spotlight key={stat.label}>
+              <Card className="bg-card-gradient border-primary/20 text-center">
+                <CardContent className="pt-6">
+                  <div className="text-3xl font-bold text-gradient mb-1">{stat.count}</div>
+                  <div className="text-sm font-semibold text-foreground mb-1">{stat.label}</div>
+                  <div className="text-xs text-foreground/50">{stat.detail}</div>
+                </CardContent>
+              </Card>
+            </Spotlight>
+          ))}
         </div>
       </div>
     </section>
@@ -235,4 +407,3 @@ const Skills = () => {
 };
 
 export default Skills;
-
